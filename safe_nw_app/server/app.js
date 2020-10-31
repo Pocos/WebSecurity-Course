@@ -7,6 +7,13 @@ const router = express.Router();
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: false }));
+
+// Add content security policy
+app.use(function(req, res, next) {
+  res.setHeader("Content-Security-Policy", "default-src 'self' ");
+  return next();
+});
+
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get("/", function(req, res, next){
