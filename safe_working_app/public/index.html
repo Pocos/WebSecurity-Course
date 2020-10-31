@@ -2,7 +2,9 @@
 
 <head>
     <title>Express</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/index.js"></script>
 </head>
 
 <body>
@@ -16,17 +18,6 @@
     <div>
         <span>Counter: <span id="counter"></span></span>
     </div>
-    <script>
-        var count = 0;
-        var myVar = setInterval(myTimer, 1000);
-        function myTimer() {
-            count++;
-            var d = new Date();
-            var t = d.toLocaleTimeString();
-            document.getElementById("demo").innerHTML = t;
-            $("#counter").html(count);
-        }
-    </script>
 </body>
 
 </html>
