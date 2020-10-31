@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <title>Express</title>
+</head>
+
+<body>
+    <h1>Web Security</h1>
+    <div>
+        <img src="https://www.monkeyuser.com/assets/images/2020/192-teamwork.png" style="max-width: 700px;">
+    </div>
+    <div>
+        <span>Current timestamp: <span id="demo"></span></span>
+    </div>
+    <script>
+        var myVar = setInterval(myTimer, 1000);
+        function myTimer() {
+            var d = new Date();
+            var t = d.toLocaleTimeString();
+            document.getElementById("demo").innerHTML = t;
+        }
+    </script>
+</body>
+
+</html>
