@@ -32,10 +32,6 @@ app.use(cookieparser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Routes
-app.get("/", function (req, res, next) {
-  res.render('index', { title: 'Express' });
-});
 
 app.post('/auth/login', async (req, res) => {
   try {
