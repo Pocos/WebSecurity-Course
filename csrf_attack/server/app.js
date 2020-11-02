@@ -12,7 +12,7 @@ const HMAC_KEY = '0NVASTRKC5M6BP8ZQI52';
 const isAuth = (req, res, next) => {
   if (!req.cookies.authorization) {
     res.status(401).end();
-  }
+  }else{
   let decoded_jwt;
   try {
     decoded_jwt = jwt.verify(req.cookies.authorization, HMAC_KEY);
@@ -21,7 +21,8 @@ const isAuth = (req, res, next) => {
   }
   //Checks passed. Go to next filter and attach decoded jwt
   req.headers.decoded_jwt = JSON.stringify(decoded_jwt);
-  next();
+next();  
+}
 };
 
 // Add all common middlewares
@@ -54,11 +55,12 @@ app.post('/auth/login', async (req, res) => {
   }
 });
 
-app.get('/money', async (req, res, next) => {
+app.get('/money', isAuth, async (req, res, next) => {
   res.send(user.money);
 });
 
 app.post('/money', isAuth, async (req, res, next) => {
+  console.log(req.body)
   user.money = req.body.money;
   res.end();
 });

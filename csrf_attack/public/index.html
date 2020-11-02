@@ -6,45 +6,72 @@
 </head>
 
 <body>
-    <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
     <h1>Web Security</h1>
     <div>
-        <img src="https://www.monkeyuser.com/assets/images/2020/192-teamwork.png" style="max-width: 700px;">
+        <img src="https://www.monkeyuser.com/assets/images/2020/171-err.png" style="max-height: 700px;">
     </div>
-    <form action="http://localhost:3000/auth/login" target="hiddenFrame" method="POST">
-
+    <form id="login">
         <input type="text" name="username" value="John" />
         <input type="text" name="password" value="mypassword" />
         <input type="submit" value="Login" />
     </form>
     <div id="user-actions">
         <div>
-            <span>
-                <input type="button" onclick="getAmount()" value="Get money">
-                <span id="amount"></span>
-            </span>
+            <span>Money:<span id="amount"></span></span>
         </div>
         <div>
-            <form action="http://localhost:3000/money" target="hiddenFrame" method="POST">
+            <form id="setMoney">
                 <input type="submit" value="Set money" />
                 <input type="text" name="money" value="" />
             </form>
         </div>
     </div>
     <script>
-        getAmount();
-        document.getElementById("user-actions").style.display = document.cookie.indexOf('authorization') !== -1
-            ? 'inline' : 'none';
-        function getAmount() {
+        console.log(document.cookie.indexOf('authorization'));
+        if (document.cookie.indexOf('authorization') !== -1) {
+           $("#user-actions").css('display', 'inline');
+           $("#login").css('display', 'none');
+           console.log("!!!");
+            getMoney();
+        }else{
+            $("#user-actions").css('display', 'none');
+            $("#login").css('display', 'inline');
+        }
+        function getMoney() {
             var request = new XMLHttpRequest();
             request.open("GET", "http://localhost:3000/money");
             request.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
-                    document.getElementById("amount").innerHTML = this.responseText;
+                    console.log(this.responseText);
+                   $("#amount").text(this.responseText);
                 }
             };
             request.send();
         }
+        $('#login').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: 'http://localhost:3000/auth/login',
+                type: 'post',
+                data: $('#login').serialize(),
+                success: function () {
+                    getMoney();
+                    $('#login').css('display', 'none');
+                    $("#user-actions").css('display', 'inline');
+                }
+            });
+        });
+        $('#setMoney').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: 'http://localhost:3000/money',
+                type: 'post',
+                data: $('#setMoney').serialize(),
+                success: function () {
+                    getMoney();
+                }
+            });
+        });
     </script>
     </div>
 </body>
