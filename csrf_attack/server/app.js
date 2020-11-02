@@ -10,6 +10,7 @@ const HMAC_KEY = '0NVASTRKC5M6BP8ZQI52';
 
 
 const isAuth = (req, res, next) => {
+  console.log(req.cookies);
   if (!req.cookies.authorization) {
     res.status(401).end();
   }else{
@@ -60,7 +61,6 @@ app.get('/money', isAuth, async (req, res, next) => {
 });
 
 app.post('/money', isAuth, async (req, res, next) => {
-  console.log(req.body)
   user.money = req.body.money;
   res.end();
 });
