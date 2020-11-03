@@ -71,6 +71,13 @@ app.post('/money', isAuth, async (req, res, next) => {
   res.end();
 });
 
+// Bonus! Error handler. Always hide implementation details (like stack trace) and throw custom error
+/*app.use((err, req, res, next) => {
+  // Only log error for debuggin purposes
+  console.log(err);
+  res.status(err.status).end();
+});*/
+
 app.listen(3000, () => {
   console.log(`listening on port 3000...`);
 });
